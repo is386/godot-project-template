@@ -8,6 +8,10 @@ var current_level: BaseLevel = null
 @onready var level_root: Node2D = get_node_or_null(level_root_path) as Node2D
 
 
+func _ready() -> void:
+	SignalBus.game_exit_to_title_requested.connect(unload_current_level)
+
+
 func load_level(level_uid: String) -> BaseLevel:
 	if level_root == null:
 		push_error("LevelManager has no level_root assigned")

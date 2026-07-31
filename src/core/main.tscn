@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://ctfib7m441jbs" path="res://src/core/main.gd" id="1_avv2o"]
 [ext_resource type="PackedScene" uid="uid://bwmhixliuiiqq" path="res://src/debug/debug_text_overlay.tscn" id="2_ukt3u"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/title_screen.tscn" id="3_title"]
-[ext_resource type="Script" path="res://src/core/managers/level_manager.gd" id="4_lvlmgr"]
+[ext_resource type="Script" uid="uid://enc1ym3u6tkt" path="res://src/core/managers/level_manager.gd" id="4_lvlmgr"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/pause_menu.tscn" id="5_pause"]
 
 [node name="Main" type="Node" unique_id=1077554886]
 process_mode = 3
@@ -41,10 +42,10 @@ offset_bottom = 40.0
 mouse_filter = 2
 
 [node name="MenuLayer" type="CanvasLayer" parent="." unique_id=1600000001]
+unique_name_in_owner = true
 layer = 15
 
 [node name="MenuRoot" type="Control" parent="MenuLayer" unique_id=1600000002]
-unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,20 +55,21 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="TitleScreen" parent="MenuLayer/MenuRoot" unique_id=1600000003 instance=ExtResource("3_title")]
-unique_name_in_owner = true
 layout_mode = 1
+level_uid = "uid://kikf44gko1yv"
 
-[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=220443269]
+[node name="PauseMenuRoot" type="Control" parent="MenuLayer" unique_id=931117828]
 process_mode = 2
-layer = 20
-
-[node name="PauseRoot" type="Control" parent="PauseLayer" unique_id=931117828]
-unique_name_in_owner = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+
+[node name="PauseMenu" parent="MenuLayer/PauseMenuRoot" instance=ExtResource("5_pause")]
+layout_mode = 1
 
 [node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=1512754606]
 process_mode = 3

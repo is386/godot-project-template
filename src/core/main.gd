@@ -14,22 +14,37 @@ var player: Player = null
 
 # UI Root Nodes
 @onready var hud_root: Control = %HudRoot
-@onready var menu_root: Control = %MenuRoot
-@onready var pause_root: Control = %PauseRoot
+@onready var menu_layer: CanvasLayer = %MenuLayer
 @onready var transition_root: Control = %TransitionRoot
 
 
 func _ready() -> void:
 	SignalBus.game_started.connect(_on_game_started)
-	SignalBus.quit_requested.connect(_quit_game)
+	SignalBus.game_exit_to_title_requested.connect(_on_game_exit_to_title_requested)
+	SignalBus.game_close_requested.connect(_close_game)
+	SignalBus.game_pause_requested.connect(_pause_game)
+	SignalBus.game_resume_requested.connect(_resume_game)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not OS.is_debug_build():
+	if OS.is_debug_build() and event.is_action_pressed("debug_quit"):
+		_close_game()
+
+
+func _pause_game() -> void:
+	if get_tree().paused or level_manager.current_level == null:
 		return
 
-	if event.is_action_pressed("debug_quit"):
-		_quit_game()
+	get_tree().paused = true
+	SignalBus.game_paused.emit()
+
+
+func _resume_game() -> void:
+	if not get_tree().paused:
+		return
+
+	get_tree().paused = false
+	SignalBus.game_resumed.emit()
 
 
 func _on_game_started(level_uid: String, spawn_id: StringName) -> void:
@@ -42,10 +57,30 @@ func _on_game_started(level_uid: String, spawn_id: StringName) -> void:
 	load_level(level_uid, spawn_id)
 
 
+func _on_game_exit_to_title_requested() -> void:
+	get_tree().paused = false
+
+	_hide_menus()
+	_clear_world()
+
+	await get_tree().process_frame
+
+	SignalBus.game_exited_to_menu.emit()
+
+
+func _clear_world() -> void:
+	for root: Node2D in [entity_root, effect_root]:
+		for child: Node in root.get_children():
+			child.queue_free()
+
+	player = null
+
+
 func _hide_menus() -> void:
-	for menu: Node in menu_root.get_children():
-		if menu is CanvasItem:
-			(menu as CanvasItem).hide()
+	for root: Node in menu_layer.get_children():
+		for menu: Node in root.get_children():
+			if menu is CanvasItem:
+				(menu as CanvasItem).hide()
 
 
 func load_level(level_scene: String, spawn_id: StringName = &"") -> BaseLevel:
@@ -86,6 +121,6 @@ func _place_player_at_level_spawn(spawn_id: StringName) -> void:
 	player.global_position = level_manager.current_level.get_spawn_point(spawn_id)
 
 
-func _quit_game() -> void:
+func _close_game() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	get_tree().quit()

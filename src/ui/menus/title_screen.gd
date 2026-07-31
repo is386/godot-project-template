@@ -1,20 +1,26 @@
 extends Control
 
-@export var new_game_level_uid: String = ""
+@export var level_uid: String = ""
 
 @onready var start_button: Button = %StartButton
-@onready var exit_button: Button = %ExitButton
+@onready var close_button: Button = %CloseButton
 
 
 func _ready() -> void:
 	start_button.pressed.connect(_on_start_button_pressed)
-	exit_button.pressed.connect(_on_exit_button_pressed)
+	close_button.pressed.connect(_on_close_button_pressed)
+	start_button.grab_focus()
+	SignalBus.game_exited_to_menu.connect(_on_game_exited_to_menu)
+
+
+func _on_game_exited_to_menu() -> void:
+	show()
 	start_button.grab_focus()
 
 
 func _on_start_button_pressed() -> void:
-	SignalBus.game_started.emit(new_game_level_uid, &"")
+	SignalBus.game_started.emit(level_uid, &"")
 
 
-func _on_exit_button_pressed() -> void:
-	SignalBus.quit_requested.emit()
+func _on_close_button_pressed() -> void:
+	SignalBus.game_close_requested.emit()
