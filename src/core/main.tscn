@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ctfib7m441jbs" path="res://src/core/main.gd" id="1_avv2o"]
 [ext_resource type="PackedScene" uid="uid://bwmhixliuiiqq" path="res://src/debug/debug_text_overlay.tscn" id="2_ukt3u"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/title_screen.tscn" id="3_title"]
+[ext_resource type="PackedScene" uid="uid://ehbd0ol75ec8" path="res://src/ui/menus/title_screen.tscn" id="3_title"]
 [ext_resource type="Script" uid="uid://enc1ym3u6tkt" path="res://src/core/managers/level_manager.gd" id="4_lvlmgr"]
-[ext_resource type="PackedScene" path="res://src/ui/menus/pause_menu.tscn" id="5_pause"]
+[ext_resource type="PackedScene" uid="uid://dq7v3nks2mxb1" path="res://src/ui/menus/pause_menu.tscn" id="5_pause"]
 
 [node name="Main" type="Node" unique_id=1077554886]
 process_mode = 3

@@ -1,7 +1,5 @@
 extends Control
 
-const TOGGLE_KEY: Key = KEY_F3
-
 const BUILD_PREFIX: String = "Build: "
 
 @onready var content: MarginContainer = %MarginContainer
@@ -19,12 +17,8 @@ func _ready() -> void:
 	_add_project_name_to_label()
 
 
-func _unhandled_key_input(event: InputEvent) -> void:
-	var key_event: InputEventKey = event as InputEventKey
-	if key_event == null or not key_event.pressed or key_event.echo:
-		return
-
-	if key_event.keycode == TOGGLE_KEY:
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_debug"):
 		content.visible = not content.visible
 		get_viewport().set_input_as_handled()
 
