@@ -56,9 +56,15 @@ text = "Build: 0.0.0"
 label_settings = SubResource("LabelSettings_6yl8a")
 vertical_alignment = 2
 
+[node name="ProjectName" type="Label" parent="MarginContainer/VBoxContainer" unique_id=966630423]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Project Name"
+label_settings = SubResource("LabelSettings_6yl8a")
+vertical_alignment = 2
+
 [node name="DebugInfo" type="Label" parent="MarginContainer/VBoxContainer" unique_id=966630422]
 layout_mode = 2
-text = "Template
-Developed by 1nder"
+text = "Developed by 1nder"
 label_settings = SubResource("LabelSettings_6yl8a")
 vertical_alignment = 2
