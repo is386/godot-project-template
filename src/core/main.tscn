@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ehbd0ol75ec8" path="res://src/ui/menus/title_screen.tscn" id="3_title"]
 [ext_resource type="Script" uid="uid://enc1ym3u6tkt" path="res://src/core/managers/level_manager.gd" id="4_lvlmgr"]
 [ext_resource type="PackedScene" path="res://src/ui/menus/pause_menu.tscn" id="5_pause"]
+[ext_resource type="PackedScene" path="res://src/ui/menus/settings_menu.tscn" id="6_settings"]
 
 [node name="Main" type="Node" unique_id=1077554886]
 process_mode = 3
@@ -57,6 +58,9 @@ mouse_filter = 2
 [node name="TitleScreen" parent="MenuLayer/MenuRoot" unique_id=1600000003 instance=ExtResource("3_title")]
 layout_mode = 1
 level_uid = "uid://kikf44gko1yv"
+
+[node name="SettingsMenu" parent="MenuLayer/MenuRoot" instance=ExtResource("6_settings")]
+layout_mode = 1
 
 [node name="PauseMenuRoot" type="Control" parent="MenuLayer" unique_id=931117828]
 process_mode = 2
