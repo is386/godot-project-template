@@ -1,5 +1,6 @@
 extends Node
 
+const MASTER_BUS: StringName = &"Master"
 const MUSIC_BUS: StringName = &"Music"
 const SFX_BUS: StringName = &"SFX"
 
@@ -48,21 +49,33 @@ func stop_music() -> void:
 	_music_player.stop()
 
 
-func set_bus_volume(bus_name: StringName, linear_volume: float) -> void:
+func set_master_volume(linear_volume: float) -> void:
+	_set_bus_volume(MASTER_BUS, linear_volume)
+
+
+func set_music_volume(linear_volume: float) -> void:
+	_set_bus_volume(MUSIC_BUS, linear_volume)
+
+
+func set_sfx_volume(linear_volume: float) -> void:
+	_set_bus_volume(SFX_BUS, linear_volume)
+
+
+func _on_music_finished() -> void:
+	if _music_loops:
+		_music_player.play()
+
+
+func _set_bus_volume(bus_name: StringName, linear_volume: float) -> void:
 	var bus_index: int = AudioServer.get_bus_index(bus_name)
 	if bus_index < 0:
-		push_error("Unknown audio bus: %s" % bus_name)
+		push_error("Audio bus '%s' is missing from the bus layout" % bus_name)
 		return
 
 	var volume: float = clampf(linear_volume, 0.0, 1.0)
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume))
 
 	AudioServer.set_bus_mute(bus_index, is_zero_approx(volume))
-
-
-func _on_music_finished() -> void:
-	if _music_loops:
-		_music_player.play()
 
 
 func _create_player(bus_name: StringName) -> AudioStreamPlayer:
