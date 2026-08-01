@@ -11,13 +11,11 @@ func _ready() -> void:
 	start_button.pressed.connect(_on_start_button_pressed)
 	settings_button.pressed.connect(_on_settings_button_pressed)
 	close_button.pressed.connect(_on_close_button_pressed)
-	start_button.grab_focus()
 	SignalBus.game_exited_to_menu.connect(_on_game_exited_to_menu)
 
 
 func _on_game_exited_to_menu() -> void:
 	show()
-	start_button.grab_focus()
 
 
 func _on_start_button_pressed() -> void:

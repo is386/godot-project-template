@@ -25,7 +25,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_game_paused() -> void:
 	show()
-	resume_button.grab_focus()
 
 
 func _on_resume_button_pressed() -> void:

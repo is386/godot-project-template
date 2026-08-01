@@ -29,8 +29,6 @@ func _on_settings_requested(callback_control: Control) -> void:
 
 	show()
 
-	fullscreen_toggle.grab_focus()
-
 
 func _on_back_button_pressed() -> void:
 	hide()
