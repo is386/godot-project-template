@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _on_visibility_changed() -> void:
 	if visible and is_inside_tree():
-		start_button.grab_focus()
+		start_button.grab_focus.call_deferred()
 
 
 func _on_game_exited_to_menu() -> void:

@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _on_visibility_changed() -> void:
 	if visible and is_inside_tree():
-		resume_button.grab_focus()
+		resume_button.grab_focus.call_deferred()
 
 
 func _unhandled_input(event: InputEvent) -> void:
