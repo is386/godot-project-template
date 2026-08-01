@@ -13,12 +13,19 @@ func _ready() -> void:
 	SignalBus.game_paused.connect(_on_game_paused)
 	SignalBus.game_resumed.connect(hide)
 
+	visibility_changed.connect(_on_visibility_changed)
+
+
+func _on_visibility_changed() -> void:
+	if visible and is_inside_tree():
+		resume_button.grab_focus()
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
 
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel"):
 		SignalBus.game_resume_requested.emit()
 		get_viewport().set_input_as_handled()
 

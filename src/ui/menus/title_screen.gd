@@ -13,6 +13,14 @@ func _ready() -> void:
 	close_button.pressed.connect(_on_close_button_pressed)
 	SignalBus.game_exited_to_menu.connect(_on_game_exited_to_menu)
 
+	visibility_changed.connect(_on_visibility_changed)
+	_on_visibility_changed()
+
+
+func _on_visibility_changed() -> void:
+	if visible and is_inside_tree():
+		start_button.grab_focus()
+
 
 func _on_game_exited_to_menu() -> void:
 	show()
